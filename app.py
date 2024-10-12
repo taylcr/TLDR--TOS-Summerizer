@@ -3,9 +3,8 @@ import openai
 
 app = Flask(__name__)
 
-# Set your OpenAI API key
-openai.api_key = "KEYKEY"
-
+# Set your OpenAI API key --> DO NOT SHARE IT WITH NO ONE !! - DO PUBLISH IT ON GITHUB OR ANY REPO !
+openai.api_key = "IGOTTHEKEYSKEYS"
 @app.route('/analyze', methods=['POST'])
 def analyze_policy():
     # Receive the JSON body from the Chrome extension
