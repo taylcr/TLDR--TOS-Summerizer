@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ToS Analyzer",
+  "name": "TOS Analyzer",
   "version": "1.0",
-  "description": "Analyze Terms of Service",
+  "description": "Analyze & Summarize Terms of Service",
   "permissions": ["activeTab", "storage", "scripting", "https://*/*", "http://*/*"],
   "action": {
     "default_popup": "popup.html",

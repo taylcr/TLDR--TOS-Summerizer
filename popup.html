@@ -35,18 +35,14 @@
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
       background-color: #357abd;
-    }
-
-    .status {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #555;
     }
 
     .tos-content {
@@ -62,13 +58,28 @@
       border: 1px solid #ddd;
       display: none; /* Initially hidden */
     }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .center-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>ToS Analyzer</h1>
+  <h1>TOS Analyzer</h1>
   <div class="card">
-    <p>Analyze and display the Terms of Service from the current tab:</p>
-    <button id="analyzeBtn">Analyze ToS</button>
+    <div class="center-buttons">
+      <button id="analyzeBtn">Analyze TOS</button>
+      <button id="summarizeBtn" style="display:none;">Summarize TOS</button> <!-- Initially hidden -->
+      <button id="expandBtn" style="display:none;">Expand</button> <!-- Expand Button -->
+    </div>
     <p class="status" id="statusMessage">Waiting for input...</p>
     <div id="tosContent" class="tos-content"></div>
   </div>

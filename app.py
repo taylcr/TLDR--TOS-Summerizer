@@ -4,7 +4,7 @@ import openai
 app = Flask(__name__)
 
 # Set your OpenAI API key
-openai.api_key = "-------"
+openai.api_key = "KEYKEY"
 
 @app.route('/analyze', methods=['POST'])
 def analyze_policy():
@@ -19,10 +19,10 @@ def analyze_policy():
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant that summarizes privacy policies."},
-                {"role": "user", "content": f"Summarize the following privacy policy:\n\n{policy_text}"}
-            ]
+             messages=[
+                         {"role": "system", "content": "You are a privacy and consent management assistant. Your job is to help users understand how their data is being used, highlight any potential privacy risks, and offer suggestions on how they can adjust their consent preferences to protect their data. Provide your responses in clear and concise bullet points, including recommendations where relevant."},
+                         {"role": "user", "content": f"Analyze the following privacy policy, summarize how the user's data will be collected and used, highlight any privacy risks, and suggest ways the user can adjust their consent preferences:\n\n{policy_text}"}
+                     ]
         )
         summary = response['choices'][0]['message']['content'].strip()
         return jsonify({'summary': summary})

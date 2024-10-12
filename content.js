@@ -3,36 +3,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const bodyText = document.body.innerText || "";
       const terms = extractTermsOfService(bodyText);
   
-      console.log("Extracted terms:", terms);  // Log the extracted ToS text
-  
       if (terms) {
-        // Send the extracted ToS to the Flask backend for ChatGPT analysis
-        fetch('http://localhost:5000/analyze', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ policyText: terms }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log("Response from backend:", data);  // Log the response from Flask
-  
-          if (data.summary) {
-            sendResponse({ success: true, summary: data.summary });
-          } else {
-            sendResponse({ success: false });
-          }
-        })
-        .catch(error => {
-          console.error('Error in fetch:', error);
-          sendResponse({ success: false });
-        });
+        sendResponse({ success: true, summary: terms });
       } else {
         sendResponse({ success: false });
       }
     }
-  
-    return true;  // Keeps the message channel open for async response
   });
+  
+  function extractTermsOfService(text) {
+    // Look for "Terms of Service" or similar phrases in the text
+    const termsRegex = /(terms\s+(of|&)\s+service|terms\s+and\s+conditions|user\s+agreement)/gi;
+    const startIndex = text.search(termsRegex);
+  
+    if (startIndex !== -1) {
+      // Return a portion of the text, starting from the first occurrence
+      return text.slice(startIndex, startIndex + 10000);  // Extract up to 10,000 characters for now
+    }
+  
+    return "No Terms of Service found.";
+  }
   
