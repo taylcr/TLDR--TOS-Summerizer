@@ -1,3 +1,10 @@
+1 - Put The Chat GPT API key at line 7 in app.py
+2 - Type on the terminal :  python app.py
+3 -  Go to chrome://extensions/ 
+4 - Enable Dev Mode
+5 - Click on Load Unpaked and select the folder containing this project
+6 - You are ready to go !!
+
 Here are some site to try it out  !
 
 1. Google
