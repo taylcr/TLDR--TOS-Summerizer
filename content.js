@@ -3,28 +3,36 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const bodyText = document.body.innerText || "";
       const terms = extractTermsOfService(bodyText);
   
+      console.log("Extracted terms:", terms);  // Log the extracted ToS text
+  
       if (terms) {
-        sendResponse({ success: true, termsOfService: terms });
+        // Send the extracted ToS to the Flask backend for ChatGPT analysis
+        fetch('http://localhost:5000/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ policyText: terms }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("Response from backend:", data);  // Log the response from Flask
+  
+          if (data.summary) {
+            sendResponse({ success: true, summary: data.summary });
+          } else {
+            sendResponse({ success: false });
+          }
+        })
+        .catch(error => {
+          console.error('Error in fetch:', error);
+          sendResponse({ success: false });
+        });
       } else {
         sendResponse({ success: false });
       }
-  
-      return true; // Keeps the message channel open for async response
     }
+  
+    return true;  // Keeps the message channel open for async response
   });
-  
-  // Enhanced function to extract surrounding text from the first occurrence of "Terms of Service"
-  function extractTermsOfService(text) {
-    const termsRegex = /(terms\s+(of|&)\s+service|terms\s+and\s+conditions|user\s+agreement)/gi;
-    
-    // Search for the first occurrence of the regex
-    const startIndex = text.search(termsRegex);
-  
-    if (startIndex !== -1) {
-      // Extract a portion of the text, starting from the first occurrence and getting surrounding context
-      return text.slice(startIndex, startIndex + 10000);  // Extract up to 10,000 characters
-    }
-  
-    return "No Terms of Service found.";
-  }
   

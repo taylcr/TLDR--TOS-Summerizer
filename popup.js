@@ -2,24 +2,22 @@ document.getElementById("analyzeBtn").addEventListener("click", () => {
   const statusMessage = document.getElementById("statusMessage");
   const tosContent = document.getElementById("tosContent");
 
-  // Clear previous content
-  tosContent.style.display = "none";
-  tosContent.innerText = "";
+  tosContent.style.display = "none";  // Hide previous content
   statusMessage.innerText = "Analyzing the page...";
 
-  // Send a message to the content script to analyze the page
+  // Query the active tab
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, { action: "analyze" }, (response) => {
-      if (response && response.success) {
-        statusMessage.innerText = "Terms of Service retrieved!";
-        statusMessage.classList.add("success");
+    const activeTab = tabs[0].id;
 
-        // Display the retrieved Terms of Service in the popup
-        tosContent.innerText = response.termsOfService || "No Terms of Service found.";
-        tosContent.style.display = "block";  // Make the content visible
+    // Send a message to the content script
+    chrome.tabs.sendMessage(activeTab, { action: "analyze" }, (response) => {
+      if (response && response.success) {
+        // Display the summarized ToS from ChatGPT
+        statusMessage.innerText = "Summary:";
+        tosContent.innerText = response.summary;
+        tosContent.style.display = "block";  // Show the extracted summary
       } else {
-        statusMessage.innerText = "Failed to retrieve Terms of Service.";
-        statusMessage.classList.add("error");
+        statusMessage.innerText = "Failed to analyze the policy.";
       }
     });
   });

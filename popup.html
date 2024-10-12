@@ -27,11 +27,6 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .card p {
-      font-size: 16px;
-      color: #555;
-    }
-
     button {
       background-color: #4a90e2;
       color: white;
@@ -54,25 +49,18 @@
       color: #555;
     }
 
-    .success {
-      color: #28a745;
-    }
-
-    .error {
-      color: #dc3545;
-    }
-
     .tos-content {
       margin-top: 20px;
       background-color: #f0f0f0;
       padding: 10px;
       border-radius: 5px;
-      max-height: 300px;  /* Increased height to accommodate more text */
+      max-height: 300px;
       overflow-y: scroll;
       text-align: left;
       font-size: 14px;
       color: #333;
       border: 1px solid #ddd;
+      display: none; /* Initially hidden */
     }
   </style>
 </head>
@@ -82,7 +70,7 @@
     <p>Analyze and display the Terms of Service from the current tab:</p>
     <button id="analyzeBtn">Analyze ToS</button>
     <p class="status" id="statusMessage">Waiting for input...</p>
-    <div id="tosContent" class="tos-content" style="display: none;">Terms of Service will be displayed here...</div>
+    <div id="tosContent" class="tos-content"></div>
   </div>
   <script src="popup.js"></script>
 </body>

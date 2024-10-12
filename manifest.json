@@ -1,27 +1,20 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "ToS Analyzer",
-  "description": "Retrieve and analyze the terms of service from any website.",
   "version": "1.0",
-  "permissions": [
-    "activeTab",
-    "storage",
-    "downloads",
-    "https://*/*",
-    "http://*/*"
-  ],
+  "description": "Analyze Terms of Service",
+  "permissions": ["activeTab", "storage", "scripting", "https://*/*", "http://*/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "default_icon.png"
+  },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
-  ],
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": "default_icon.png"
-  }
+  ]
 }
